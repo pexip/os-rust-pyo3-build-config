@@ -1,0 +1,82 @@
+Source: rust-pyo3-build-config
+Section: rust
+Priority: optional
+Build-Depends: debhelper (>= 12),
+ dh-cargo (>= 25),
+ cargo:native <!nocheck>,
+ rustc:native <!nocheck>,
+ libstd-rust-dev <!nocheck>,
+ librust-once-cell-1+default-dev <!nocheck>,
+ librust-target-lexicon-0.12+default-dev <!nocheck>
+Maintainer: Debian Rust Maintainers <pkg-rust-maintainers@alioth-lists.debian.net>
+Uploaders:
+ Jelmer Vernooĳ <jelmer@debian.org>
+Standards-Version: 4.5.1
+Vcs-Git: https://salsa.debian.org/rust-team/debcargo-conf.git [src/pyo3-build-config]
+Vcs-Browser: https://salsa.debian.org/rust-team/debcargo-conf/tree/master/src/pyo3-build-config
+Homepage: https://github.com/pyo3/pyo3
+Rules-Requires-Root: no
+
+Package: librust-pyo3-build-config-dev
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
+ librust-once-cell-1+default-dev,
+ librust-target-lexicon-0.12+default-dev
+Suggests:
+ librust-pyo3-build-config+python3-dll-a-dev (= ${binary:Version})
+Provides:
+ librust-pyo3-build-config+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config+resolve-config-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+resolve-config-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16+resolve-config-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5+resolve-config-dev (= ${binary:Version})
+Description: Build configuration for the PyO3 ecosystem - Rust source code
+ This package contains the source for the Rust pyo3-build-config crate, packaged
+ by debcargo for use with cargo and dh-cargo.
+
+Package: librust-pyo3-build-config+python3-dll-a-dev
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
+ librust-pyo3-build-config-dev (= ${binary:Version}),
+ librust-python3-dll-a-0.2+default-dev (>= 0.2.2-~~)
+Provides:
+ librust-pyo3-build-config-0+python3-dll-a-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16+python3-dll-a-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.16.5+python3-dll-a-dev (= ${binary:Version})
+Description: Build configuration for the PyO3 ecosystem - feature "python3-dll-a"
+ This metapackage enables feature "python3-dll-a" for the Rust pyo3-build-config
+ crate, by pulling in any additional dependencies needed by that feature.
