@@ -1,3 +1,9 @@
+rust-pyo3-build-config (0.16.5-3pexip1) pexip; urgency=medium
+
+  * Prepare Pexip packaging
+
+ -- John-Mark Bell <jmb@pexip.com>  Wed, 16 Nov 2022 21:17:10 +0000
+
 rust-pyo3-build-config (0.16.5-3) unstable; urgency=medium
 
   * Drop patch drop-python3-dll-a: relevant crate is now packaged.

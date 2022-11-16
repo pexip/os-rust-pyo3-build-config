@@ -8,14 +8,16 @@ Build-Depends: debhelper (>= 12),
  libstd-rust-dev <!nocheck>,
  librust-once-cell-1+default-dev <!nocheck>,
  librust-target-lexicon-0.12+default-dev <!nocheck>
-Maintainer: Debian Rust Maintainers <pkg-rust-maintainers@alioth-lists.debian.net>
-Uploaders:
+Maintainer: Pexip AS <packaging@pexip.com>
+XSBC-Pexip-Original-Maintainer: Debian Rust Maintainers <pkg-rust-maintainers@alioth-lists.debian.net>
+XSBC-Pexip-Original-Uploaders:
  Jelmer Vernooĳ <jelmer@debian.org>
 Standards-Version: 4.5.1
 Vcs-Git: https://salsa.debian.org/rust-team/debcargo-conf.git [src/pyo3-build-config]
 Vcs-Browser: https://salsa.debian.org/rust-team/debcargo-conf/tree/master/src/pyo3-build-config
 Homepage: https://github.com/pyo3/pyo3
 Rules-Requires-Root: no
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ bookworm
 
 Package: librust-pyo3-build-config-dev
 Architecture: any
