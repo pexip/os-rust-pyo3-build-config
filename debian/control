@@ -11,10 +11,11 @@ Build-Depends: debhelper (>= 12),
 Maintainer: Debian Rust Maintainers <pkg-rust-maintainers@alioth-lists.debian.net>
 Uploaders:
  Jelmer Vernooĳ <jelmer@debian.org>
-Standards-Version: 4.5.1
+Standards-Version: 4.6.1
 Vcs-Git: https://salsa.debian.org/rust-team/debcargo-conf.git [src/pyo3-build-config]
 Vcs-Browser: https://salsa.debian.org/rust-team/debcargo-conf/tree/master/src/pyo3-build-config
 Homepage: https://github.com/pyo3/pyo3
+X-Cargo-Crate: pyo3-build-config
 Rules-Requires-Root: no
 
 Package: librust-pyo3-build-config-dev
@@ -44,24 +45,24 @@ Provides:
  librust-pyo3-build-config-0+default-dev (= ${binary:Version}),
  librust-pyo3-build-config-0+extension-module-dev (= ${binary:Version}),
  librust-pyo3-build-config-0+resolve-config-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16+abi3-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16+abi3-py310-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16+abi3-py37-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16+abi3-py38-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16+abi3-py39-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16+default-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16+extension-module-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16+resolve-config-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5+abi3-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5+abi3-py310-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5+abi3-py37-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5+abi3-py38-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5+abi3-py39-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5+default-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5+extension-module-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5+resolve-config-dev (= ${binary:Version})
+ librust-pyo3-build-config-0.17-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17+resolve-config-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3+resolve-config-dev (= ${binary:Version})
 Description: Build configuration for the PyO3 ecosystem - Rust source code
  This package contains the source for the Rust pyo3-build-config crate, packaged
  by debcargo for use with cargo and dh-cargo.
@@ -72,11 +73,11 @@ Multi-Arch: same
 Depends:
  ${misc:Depends},
  librust-pyo3-build-config-dev (= ${binary:Version}),
- librust-python3-dll-a-0.2+default-dev (>= 0.2.2-~~)
+ librust-python3-dll-a-0.2+default-dev (>= 0.2.6-~~)
 Provides:
  librust-pyo3-build-config-0+python3-dll-a-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16+python3-dll-a-dev (= ${binary:Version}),
- librust-pyo3-build-config-0.16.5+python3-dll-a-dev (= ${binary:Version})
+ librust-pyo3-build-config-0.17+python3-dll-a-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.17.3+python3-dll-a-dev (= ${binary:Version})
 Description: Build configuration for the PyO3 ecosystem - feature "python3-dll-a"
  This metapackage enables feature "python3-dll-a" for the Rust pyo3-build-config
  crate, by pulling in any additional dependencies needed by that feature.
