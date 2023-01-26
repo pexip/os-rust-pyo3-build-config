@@ -69,7 +69,7 @@ pub fn target_triple_from_env() -> Triple {
 ///
 /// When the `PYO3_NO_PYTHON` variable is set, or during cross compile situations, then alternative
 /// strategies are used to populate this type.
-#[cfg_attr(test, derive(Debug, PartialEq))]
+#[cfg_attr(test, derive(Debug, PartialEq, Eq))]
 pub struct InterpreterConfig {
     /// The Python implementation flavor.
     ///
@@ -440,6 +440,14 @@ print("mingw", get_platform().startswith("mingw"))
         let version = version.ok_or("missing value for version")?;
         let implementation = implementation.unwrap_or(PythonImplementation::CPython);
         let abi3 = abi3.unwrap_or(false);
+        // Fixup lib_name if it's not set
+        let lib_name = lib_name.or_else(|| {
+            if let Ok(Ok(target)) = env::var("TARGET").map(|target| target.parse::<Triple>()) {
+                default_lib_name_for_target(version, implementation, abi3, &target)
+            } else {
+                None
+            }
+        });
 
         Ok(InterpreterConfig {
             implementation,
@@ -456,25 +464,22 @@ print("mingw", get_platform().startswith("mingw"))
         })
     }
 
+    #[cfg(feature = "python3-dll-a")]
     #[allow(clippy::unnecessary_wraps)]
-    pub fn fixup_import_libs(&mut self) -> Result<()> {
-        let target = target_triple_from_env();
-        if self.lib_name.is_none() && target.operating_system == OperatingSystem::Windows {
-            self.lib_name = Some(default_lib_name_windows(
-                self.version,
-                self.implementation,
-                self.abi3,
-                false,
-            ));
-        }
+    pub fn generate_import_libs(&mut self) -> Result<()> {
         // Auto generate python3.dll import libraries for Windows targets.
-        #[cfg(feature = "python3-dll-a")]
-        {
-            if self.lib_dir.is_none() {
-                let py_version = if self.abi3 { None } else { Some(self.version) };
-                self.lib_dir = self::import_lib::generate_import_lib(&target, py_version)?;
-            }
+        if self.lib_dir.is_none() {
+            let target = target_triple_from_env();
+            let py_version = if self.abi3 { None } else { Some(self.version) };
+            self.lib_dir =
+                import_lib::generate_import_lib(&target, self.implementation, py_version)?;
         }
+        Ok(())
+    }
+
+    #[cfg(not(feature = "python3-dll-a"))]
+    #[allow(clippy::unnecessary_wraps)]
+    pub fn generate_import_libs(&mut self) -> Result<()> {
         Ok(())
     }
 
@@ -630,7 +635,7 @@ impl FromStr for PythonVersion {
     }
 }
 
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum PythonImplementation {
     CPython,
     PyPy,
@@ -738,7 +743,7 @@ fn require_libdir_for_target(target: &Triple) -> bool {
 ///
 /// Usually this is collected from the environment (i.e. `PYO3_CROSS_*` and `CARGO_CFG_TARGET_*`)
 /// when a cross-compilation configuration is detected.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct CrossCompileConfig {
     /// The directory containing the Python library to link against.
     pub lib_dir: Option<PathBuf>,
@@ -1032,7 +1037,7 @@ impl FromStr for BuildFlag {
 /// is the equivalent of `#ifdef {varname}` in C.
 ///
 /// see Misc/SpecialBuilds.txt in the python source for what these mean.
-#[cfg_attr(test, derive(Debug, PartialEq))]
+#[cfg_attr(test, derive(Debug, PartialEq, Eq))]
 #[derive(Clone, Default)]
 pub struct BuildFlags(pub HashSet<BuildFlag>);
 
@@ -1076,7 +1081,8 @@ impl BuildFlags {
         script.push_str("config = sysconfig.get_config_vars()\n");
 
         for k in &BuildFlags::ALL {
-            script.push_str(&format!("print(config.get('{}', '0'))\n", k));
+            use std::fmt::Write;
+            writeln!(&mut script, "print(config.get('{}', '0'))", k).unwrap();
         }
 
         let stdout = run_python_script(interpreter.as_ref(), &script)?;
@@ -1176,7 +1182,7 @@ impl Sysconfigdata {
 /// [`from_sysconfigdata`](InterpreterConfig::from_sysconfigdata).
 pub fn parse_sysconfigdata(sysconfigdata_path: impl AsRef<Path>) -> Result<Sysconfigdata> {
     let sysconfigdata_path = sysconfigdata_path.as_ref();
-    let mut script = fs::read_to_string(&sysconfigdata_path).with_context(|| {
+    let mut script = fs::read_to_string(sysconfigdata_path).with_context(|| {
         format!(
             "failed to read config from {}",
             sysconfigdata_path.display()
@@ -1225,7 +1231,8 @@ fn find_sysconfigdata(cross: &CrossCompileConfig) -> Result<Option<PathBuf>> {
             sysconfigdata files found:",
         );
         for path in sysconfig_paths {
-            error_msg += &format!("\n\t{}", path.display());
+            use std::fmt::Write;
+            write!(&mut error_msg, "\n\t{}", path.display()).unwrap();
         }
         bail!("{}\n", error_msg);
     }
@@ -1412,18 +1419,8 @@ fn default_cross_compile(cross_compile_config: &CrossCompileConfig) -> Result<In
         .implementation
         .unwrap_or(PythonImplementation::CPython);
 
-    let lib_name = if cross_compile_config.target.operating_system == OperatingSystem::Windows {
-        Some(default_lib_name_windows(
-            version,
-            implementation,
-            abi3,
-            false,
-        ))
-    } else if is_linking_libpython_for_target(&cross_compile_config.target) {
-        Some(default_lib_name_unix(version, implementation, None))
-    } else {
-        None
-    };
+    let lib_name =
+        default_lib_name_for_target(version, implementation, abi3, &cross_compile_config.target);
 
     let mut lib_dir = cross_compile_config.lib_dir_string();
 
@@ -1431,7 +1428,13 @@ fn default_cross_compile(cross_compile_config: &CrossCompileConfig) -> Result<In
     #[cfg(feature = "python3-dll-a")]
     if lib_dir.is_none() {
         let py_version = if abi3 { None } else { Some(version) };
-        lib_dir = self::import_lib::generate_import_lib(&cross_compile_config.target, py_version)?;
+        lib_dir = self::import_lib::generate_import_lib(
+            &cross_compile_config.target,
+            cross_compile_config
+                .implementation
+                .unwrap_or(PythonImplementation::CPython),
+            py_version,
+        )?;
     }
 
     Ok(InterpreterConfig {
@@ -1531,6 +1534,26 @@ fn load_cross_compile_config(
 //
 // This contains only the limited ABI symbols.
 const WINDOWS_ABI3_LIB_NAME: &str = "python3";
+
+fn default_lib_name_for_target(
+    version: PythonVersion,
+    implementation: PythonImplementation,
+    abi3: bool,
+    target: &Triple,
+) -> Option<String> {
+    if target.operating_system == OperatingSystem::Windows {
+        Some(default_lib_name_windows(
+            version,
+            implementation,
+            abi3,
+            false,
+        ))
+    } else if is_linking_libpython_for_target(target) {
+        Some(default_lib_name_unix(version, implementation, None))
+    } else {
+        None
+    }
+}
 
 fn default_lib_name_windows(
     version: PythonVersion,
@@ -1749,7 +1772,11 @@ pub fn make_interpreter_config() -> Result<InterpreterConfig> {
         } else {
             Some(interpreter_config.version)
         };
-        interpreter_config.lib_dir = self::import_lib::generate_import_lib(&host, py_version)?;
+        interpreter_config.lib_dir = self::import_lib::generate_import_lib(
+            &host,
+            interpreter_config.implementation,
+            py_version,
+        )?;
     }
 
     Ok(interpreter_config)
