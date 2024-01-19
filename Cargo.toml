@@ -10,9 +10,9 @@
 # See Cargo.toml.orig for the original contents.
 
 [package]
-edition = "2018"
+edition = "2021"
 name = "pyo3-build-config"
-version = "0.17.3"
+version = "0.20.2"
 authors = ["PyO3 Project and Contributors <https://github.com/PyO3>"]
 description = "Build configuration for the PyO3 ecosystem"
 homepage = "https://github.com/pyo3/pyo3"
@@ -26,7 +26,7 @@ categories = [
     "api-bindings",
     "development-tools::ffi",
 ]
-license = "Apache-2.0"
+license = "MIT OR Apache-2.0"
 repository = "https://github.com/pyo3/pyo3"
 
 [package.metadata.docs.rs]
@@ -51,7 +51,9 @@ version = "0.12"
 
 [features]
 abi3 = []
-abi3-py310 = ["abi3"]
+abi3-py310 = ["abi3-py311"]
+abi3-py311 = ["abi3-py312"]
+abi3-py312 = ["abi3"]
 abi3-py37 = ["abi3-py38"]
 abi3-py38 = ["abi3-py39"]
 abi3-py39 = ["abi3-py310"]
