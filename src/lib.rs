@@ -21,11 +21,9 @@ use std::{env, process::Command, str::FromStr};
 #[cfg(feature = "resolve-config")]
 use once_cell::sync::OnceCell;
 
-#[allow(deprecated)]
 pub use impl_::{
-    cross_compiling, cross_compiling_from_to, find_all_sysconfigdata, parse_sysconfigdata,
-    BuildFlag, BuildFlags, CrossCompileConfig, InterpreterConfig, PythonImplementation,
-    PythonVersion, Triple,
+    cross_compiling_from_to, find_all_sysconfigdata, parse_sysconfigdata, BuildFlag, BuildFlags,
+    CrossCompileConfig, InterpreterConfig, PythonImplementation, PythonVersion, Triple,
 };
 use target_lexicon::OperatingSystem;
 
@@ -44,7 +42,9 @@ use target_lexicon::OperatingSystem;
 /// For examples of how to use these attributes, [see PyO3's guide](https://pyo3.rs/latest/building_and_distribution/multiple_python_versions.html).
 #[cfg(feature = "resolve-config")]
 pub fn use_pyo3_cfgs() {
-    get().emit_pyo3_cfgs();
+    for cargo_command in get().build_script_outputs() {
+        println!("{}", cargo_command)
+    }
 }
 
 /// Adds linker arguments suitable for PyO3's `extension-module` feature.
@@ -144,19 +144,14 @@ pub fn print_feature_cfgs() {
 
     let rustc_minor_version = rustc_minor_version().unwrap_or(0);
 
-    // Enable use of const generics on Rust 1.51 and greater
-    if rustc_minor_version >= 51 {
-        println!("cargo:rustc-cfg=min_const_generics");
+    // Enable use of const initializer for thread_local! on Rust 1.59 and greater
+    if rustc_minor_version >= 59 {
+        println!("cargo:rustc-cfg=thread_local_const_init");
     }
 
-    // Enable use of std::ptr::addr_of! on Rust 1.51 and greater
-    if rustc_minor_version >= 51 {
-        println!("cargo:rustc-cfg=addr_of");
-    }
-
-    // Enable use of Option::insert on Rust 1.53 and greater
-    if rustc_minor_version >= 53 {
-        println!("cargo:rustc-cfg=option_insert");
+    // invalid_from_utf8 lint was added in Rust 1.74
+    if rustc_minor_version >= 74 {
+        println!("cargo:rustc-cfg=invalid_from_utf8_lint");
     }
 }
 
