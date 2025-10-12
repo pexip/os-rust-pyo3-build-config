@@ -1,0 +1,78 @@
+Source: rust-pyo3-build-config
+Section: rust
+Priority: optional
+Build-Depends: debhelper-compat (= 13),
+ dh-sequence-cargo
+Build-Depends-Arch: cargo:native <!nocheck>,
+ rustc:native (>= 1.74) <!nocheck>,
+ libstd-rust-dev <!nocheck>,
+ librust-target-lexicon-0.12+default-dev <!nocheck>
+Maintainer: Debian Rust Maintainers <pkg-rust-maintainers@alioth-lists.debian.net>
+Uploaders:
+ Jelmer Vernooĳ <jelmer@debian.org>
+Standards-Version: 4.7.2
+Vcs-Git: https://salsa.debian.org/rust-team/debcargo-conf.git [src/pyo3-build-config]
+Vcs-Browser: https://salsa.debian.org/rust-team/debcargo-conf/tree/master/src/pyo3-build-config
+Homepage: https://github.com/pyo3/pyo3
+X-Cargo-Crate: pyo3-build-config
+
+Package: librust-pyo3-build-config-dev
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
+ librust-target-lexicon-0.12+default-dev
+Provides:
+ librust-pyo3-build-config+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py311-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py312-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py313-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py314-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config+resolve-config-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py311-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py312-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py313-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py314-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0+resolve-config-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+abi3-py311-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+abi3-py312-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+abi3-py313-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+abi3-py314-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26+resolve-config-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+abi3-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+abi3-py310-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+abi3-py311-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+abi3-py312-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+abi3-py313-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+abi3-py314-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+abi3-py37-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+abi3-py38-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+abi3-py39-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+default-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+extension-module-dev (= ${binary:Version}),
+ librust-pyo3-build-config-0.26.0+resolve-config-dev (= ${binary:Version})
+Description: Build configuration for the PyO3 ecosystem - Rust source code
+ Source code for Debianized Rust crate "pyo3-build-config"
