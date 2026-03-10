@@ -16,6 +16,7 @@ Vcs-Git: https://salsa.debian.org/rust-team/debcargo-conf.git [src/pyo3-build-co
 Vcs-Browser: https://salsa.debian.org/rust-team/debcargo-conf/tree/master/src/pyo3-build-config
 Homepage: https://github.com/pyo3/pyo3
 X-Cargo-Crate: pyo3-build-config
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ forky
 
 Package: librust-pyo3-build-config-dev
 Architecture: any
