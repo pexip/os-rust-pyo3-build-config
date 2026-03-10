@@ -6,7 +6,7 @@ Build-Depends: debhelper-compat (= 13),
 Build-Depends-Arch: cargo:native <!nocheck>,
  rustc:native (>= 1.74) <!nocheck>,
  libstd-rust-dev <!nocheck>,
- librust-target-lexicon-0.13+default-dev <!nocheck>
+ librust-target-lexicon-0.12+default-dev <!nocheck>
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Debian Rust Maintainers <pkg-rust-maintainers@alioth-lists.debian.net>
 XSBC-Pexip-Original-Uploaders:
@@ -23,7 +23,7 @@ Architecture: any
 Multi-Arch: same
 Depends:
  ${misc:Depends},
- librust-target-lexicon-0.13+default-dev
+ librust-target-lexicon-0.12+default-dev
 Provides:
  librust-pyo3-build-config+abi3-dev (= ${binary:Version}),
  librust-pyo3-build-config+abi3-py310-dev (= ${binary:Version}),
