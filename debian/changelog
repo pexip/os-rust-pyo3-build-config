@@ -1,3 +1,29 @@
+rust-pyo3-build-config (0.27.2-2) unstable; urgency=medium
+
+  * Team upload.
+  * Package pyo3-build-config 0.27.2 from crates.io using debcargo 2.7.11
+  * Drop patch older-target-lexicon, use target-lexicon 0.13.
+
+ -- Peter Michael Green <plugwash@debian.org>  Sun, 11 Jan 2026 10:45:43 +0000
+
+rust-pyo3-build-config (0.27.2-1) unstable; urgency=medium
+
+  * Package pyo3-build-config 0.27.2 from crates.io using debcargo 2.7.11
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 01 Dec 2025 09:12:38 +0000
+
+rust-pyo3-build-config (0.27.1-2) unstable; urgency=medium
+
+  * Target unstable distribution.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Tue, 18 Nov 2025 10:25:31 +0000
+
+rust-pyo3-build-config (0.27.1-1) experimental; urgency=medium
+
+  * Package pyo3-build-config 0.27.1 from crates.io using debcargo 2.7.11
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Thu, 30 Oct 2025 18:49:37 +0000
+
 rust-pyo3-build-config (0.26.0-1+pexip25u3) pexip-trixie; urgency=medium
 
   * Fix maintainers/uploaders
