@@ -1,3 +1,5 @@
+Downgrade lexicon dependency versions to work with trixie
+
 --- a/Cargo.toml
 +++ b/Cargo.toml
 @@ -59,7 +59,7 @@
